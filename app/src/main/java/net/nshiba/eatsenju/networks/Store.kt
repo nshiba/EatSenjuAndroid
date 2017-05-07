@@ -1,6 +1,6 @@
 package net.nshiba.eatsenju.networks
 
-data class Store(
+data class Store (
         val name: String,
         val base: String,
         val monday: String,
