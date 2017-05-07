@@ -3,13 +3,13 @@ package net.nshiba.eatsenju.views.activities
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import net.nshiba.eatsenju.R
 import net.nshiba.eatsenju.databinding.ActivityMainBinding
 import net.nshiba.eatsenju.networks.Store
 import net.nshiba.eatsenju.presenter.MainActivityPresenter
-import net.nshiba.eatsenju.views.StoreRecyclerViewAdapter
+import net.nshiba.eatsenju.views.adapters.StoreRecyclerViewAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +28,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setupRecyclerView() {
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        val manager = GridLayoutManager(this, 2)
+        val spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == 0) { 1 } else { 2 }
+            }
+        }
+        manager.spanSizeLookup = spanSizeLookup
+        binding.recyclerView.layoutManager = manager
     }
 
     fun success(data: List<Store>) {
