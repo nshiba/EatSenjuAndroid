@@ -1,4 +1,4 @@
-aply plugin: 'com.android.application'
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
