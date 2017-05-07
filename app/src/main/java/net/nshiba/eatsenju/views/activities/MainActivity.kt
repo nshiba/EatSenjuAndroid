@@ -23,26 +23,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupRecyclerView()
-        presenter.fetchStoreList()
-                .subscribe(this::success, this::error)
+        presenter.fetchStoreList().subscribe(this::success, this::error)
     }
 
     fun setupRecyclerView() {
         val manager = GridLayoutManager(this, 2)
         val spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position == 0) { 1 } else { 2 }
+                return if (position == 0) { 2 } else { 1 }
             }
         }
         manager.spanSizeLookup = spanSizeLookup
         binding.recyclerView.layoutManager = manager
+        binding.recyclerView.adapter = StoreRecyclerViewAdapter(context = this, itemClickListener = {})
     }
 
     fun success(data: List<Store>) {
-        binding.recyclerView.adapter = StoreRecyclerViewAdapter(data = data, context = this,
-                itemClickListener = {
-                    // do nothing
-                })
+        val adapter = binding.recyclerView.adapter as StoreRecyclerViewAdapter
+        adapter.addAll(data)
     }
 
     fun error(error: Throwable) {

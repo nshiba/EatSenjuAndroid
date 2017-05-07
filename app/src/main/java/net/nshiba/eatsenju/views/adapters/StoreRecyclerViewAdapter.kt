@@ -10,14 +10,23 @@ import net.nshiba.eatsenju.databinding.ItemStoreListBinding
 import net.nshiba.eatsenju.networks.Store
 import net.nshiba.eatsenju.viewmodels.StoreItemViewModel
 
-class StoreRecyclerViewAdapter(data: List<Store>, val itemClickListener: (Store) -> Unit, val context: Context):
+class StoreRecyclerViewAdapter(val itemClickListener: (Store) -> Unit, val context: Context):
         RecyclerView.Adapter<StoreRecyclerViewAdapter.ViewHolder>() {
 
-    private val VIEWTYPE_HEADER = 0
+    companion object ViewType {
 
-    private val VIEWTYPE_ITEM = 1
+        val VIEWTYPE_HEADER = 0
 
-    val dataList = data.toMutableList()
+        val VIEWTYPE_ITEM = 1
+
+    }
+
+    val dataList = mutableListOf<Store>()
+
+    fun addAll(date: List<Store>) {
+        dataList.addAll(date)
+        notifyDataSetChanged()
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
