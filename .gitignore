@@ -42,5 +42,6 @@ captures/
 # Keystore files
 *.jks
 
-# mac
+# other
 .DS_Store
+senju_eat_header.jpg
